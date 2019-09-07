@@ -11,90 +11,22 @@
                 特色 <i class="iconfont icon-lower-triangle"></i>
             </div>
         </div>
-        <div class="cinema_body">
+        <Loading v-if="isLoading"></Loading>
+        <div class="cinema_body" v-else ref="cinemaBody">
             <ul>
-                <li>
+                <li v-for="cinema in cinemaList" :key="cinema.id">
                     <div>
-                        <span>大地影院(澳东世纪店)</span>
-                        <span class="q"><span class="price">22.9</span> 元起</span>
+                        <span>{{cinema.nm}}</span>
+                        <span class="q"><span class="price">{{cinema.sellPrice}}</span> 元起</span>
                     </div>
                     <div class="address">
-                        <span>金州区大连经济技术开发区澳东世纪3层</span>
-                        <span>1763.5km</span>
+                        <span>{{cinema.addr}}</span>
+                        <span>{{cinema.distance}}</span>
                     </div>
                     <div class="card">
-                        <div>小吃</div>
-                        <div>折扣卡</div>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <span>大地影院(澳东世纪店)</span>
-                        <span class="q"><span class="price">22.9</span> 元起</span>
-                    </div>
-                    <div class="address">
-                        <span>金州区大连经济技术开发区澳东世纪3层</span>
-                        <span>1763.5km</span>
-                    </div>
-                    <div class="card">
-                        <div>小吃</div>
-                        <div>折扣卡</div>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <span>大地影院(澳东世纪店)</span>
-                        <span class="q"><span class="price">22.9</span> 元起</span>
-                    </div>
-                    <div class="address">
-                        <span>金州区大连经济技术开发区澳东世纪3层</span>
-                        <span>1763.5km</span>
-                    </div>
-                    <div class="card">
-                        <div>小吃</div>
-                        <div>折扣卡</div>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <span>大地影院(澳东世纪店)</span>
-                        <span class="q"><span class="price">22.9</span> 元起</span>
-                    </div>
-                    <div class="address">
-                        <span>金州区大连经济技术开发区澳东世纪3层</span>
-                        <span>1763.5km</span>
-                    </div>
-                    <div class="card">
-                        <div>小吃</div>
-                        <div>折扣卡</div>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <span>大地影院(澳东世纪店)</span>
-                        <span class="q"><span class="price">22.9</span> 元起</span>
-                    </div>
-                    <div class="address">
-                        <span>金州区大连经济技术开发区澳东世纪3层</span>
-                        <span>1763.5km</span>
-                    </div>
-                    <div class="card">
-                        <div>小吃</div>
-                        <div>折扣卡</div>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <span>大地影院(澳东世纪店)</span>
-                        <span class="q"><span class="price">22.9</span> 元起</span>
-                    </div>
-                    <div class="address">
-                        <span>金州区大连经济技术开发区澳东世纪3层</span>
-                        <span>1763.5km</span>
-                    </div>
-                    <div class="card">
-                        <div>小吃</div>
-                        <div>折扣卡</div>
+                        <div v-for="(value,key) in cinema.tag" v-if="value===1" :class="key|formatClass">
+                            {{key|formatCard}}
+                        </div>
                     </div>
                 </li>
             </ul>
@@ -103,8 +35,79 @@
 
 </template>
 <script>
+    import {mapState} from 'vuex'
+    import BScroll from 'better-scroll'
+
     export default {
-        name:'cinema'
+        name: 'cinema',
+        data() {
+            return {
+                cinemaList: [],
+                isLoading: true,
+                prevCityId: -1
+            }
+        },
+        computed: {
+            ...mapState(['city'])
+        },
+        methods: {
+            async getCinemaList() {
+                const {id} = this.city.cityInfo
+                const response = await this.$axios.get(`/api/cinemaList?cityId=${id}`)
+                this.isLoading = false
+                this.prevCityId = id
+                this.cinemaList = response.data.data.cinemas
+                this.$nextTick(() => {
+                    new BScroll(this.$refs.cinemaBody)
+                })
+            }
+        },
+        created() {
+            this.getCinemaList()
+        },
+        filters: {
+            formatCard(key) {
+                let value = ''
+                const card = [
+                    {key: 'allowRefund', value: '改签'},
+                    {key: 'endorse', value: '可退'},
+                    {key: 'sell', value: '折扣卡'},
+                    {key: 'snack', value: '小吃'}
+                ]
+                card.some(item => {
+                    if (item.key === key) {
+                        value = item.value
+                        return true
+                    }
+                })
+                return value
+            },
+            formatClass(key) {
+                let value = ''
+                const card = [
+                    {key: 'allowRefund', value: 'or'},
+                    {key: 'endorse', value: 'or'},
+                    {key: 'sell', value: 'bl'},
+                    {key: 'snack', value: 'bl'}
+                ]
+                card.some(item => {
+                    if (item.key === key) {
+                        value = item.value
+                        return true
+                    }
+                })
+                return value
+            }
+
+        },
+        activated() {
+            const {id} = this.city.cityInfo
+            if (id === this.prevCityId) {
+                return
+            }
+            this.isLoading = true
+            this.getCinemaList()
+        }
     }
 </script>
 <style scoped>

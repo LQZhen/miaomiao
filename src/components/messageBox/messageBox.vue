@@ -34,25 +34,28 @@
         line-height: 40px;
         font-size: 18px;
     }
-    .messageBox>p{
+
+    .messageBox > p {
         text-align: center;
         line-height: 40px;
     }
 
     .messageBox > div {
-       display: flex;
+        display: flex;
         position: absolute;
         width: 100%;
         bottom: 0px;
         border-top: 1px solid #ccc;
     }
-    .messageBox > div>div{
+
+    .messageBox > div > div {
         flex: 1;
         text-align: center;
         line-height: 30px;
         border-right: 1px solid #ccc;
     }
-    .messageBox > div>div:last-child{
+
+    .messageBox > div > div:last-child {
         border: none;
     }
 </style>

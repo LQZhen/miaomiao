@@ -31,7 +31,7 @@
             return {
                 message: '',
                 movieList: [],
-                info:""
+                info: ""
             }
         },
         methods: {
@@ -43,29 +43,29 @@
         },
         watch: {
             async 'message'(newValue) {
-                    this.cancelRequest()
-                    try {
-                        const that = this
-                        const response = await this.$axios.get(`/api/searchList?cityId=10&kw=${newValue}`, {
-                            cancelToken: new this.$axios.CancelToken(function executor(c) {
-                                that.source = c;
-                            })
+                this.cancelRequest()
+                try {
+                    const that = this
+                    const response = await this.$axios.get(`/api/searchList?cityId=10&kw=${newValue}`, {
+                        cancelToken: new this.$axios.CancelToken(function executor(c) {
+                            that.source = c;
                         })
-                       const result=response.data
-                        if(result.status===0&&result.data.movies){
-                            this.movieList=result.data.movies.list
-                        }else{
-                            this.info='未查询到有效信息'
-                        }
-
-                    } catch (error) {
-                        if (this.$axios.isCancel(error)) {
-                            console.log('Rquest canceled', error.message); //请求如果被取消，这里是返回取消的message
-                        } else {
-                            //handle error
-                            console.log(error);
-                        }
+                    })
+                    const result = response.data
+                    if (result.status === 0 && result.data.movies) {
+                        this.movieList = result.data.movies.list
+                    } else {
+                        this.info = '未查询到有效信息'
                     }
+
+                } catch (error) {
+                    if (this.$axios.isCancel(error)) {
+                        console.log('Rquest canceled', error.message); //请求如果被取消，这里是返回取消的message
+                    } else {
+                        //handle error
+                        console.log(error);
+                    }
+                }
             }
         }
     }

@@ -45,28 +45,26 @@
                         tap: true,
                     })
                 })
+            }
         }
-    }
-    ,
-    created()
-    {
-        this.getMovieList()
-    }
-    ,
-    computed: {
-    ...
-        mapState(['city'])
-    }
-    ,
-    activated()
-    {
-        const {id} = this.city.cityInfo
-        if (id === this.prevCityId) {
-            return
+        ,
+        created() {
+            this.getMovieList()
         }
-        this.isLoading = true
-        this.getMovieList()
-    }
+        ,
+        computed: {
+            ...
+                mapState(['city'])
+        }
+        ,
+        activated() {
+            const {id} = this.city.cityInfo
+            if (id === this.prevCityId) {
+                return
+            }
+            this.isLoading = true
+            this.getMovieList()
+        }
     }
 </script>
 
