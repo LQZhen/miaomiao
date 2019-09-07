@@ -1,12 +1,12 @@
 <template>
     <div class="header">
-        <h1>{{title}}</h1>
+        <h1>{{title||'喵喵电影'}}</h1>
     </div>
 </template>
 <script>
     export default {
         props:{
-            title:String
+            title:String,
         }
     }
 </script>
