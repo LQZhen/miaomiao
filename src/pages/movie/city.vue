@@ -1,34 +1,34 @@
 <template>
-    <Loading v-if="isLoading"></Loading>
-    <div class="city_body" v-else>
-        <div class="city_list">
-            <div ref="cityList" style="height: 100%">
-                <div>
-                    <div class="city_hot">
-                        <h2>热门城市</h2>
-                        <ul class="clearfix">
-                            <li v-for="city in hotList " :key="city.id" @tap="changeCity(city.nm,city.id)">{{city.nm}}</li>
-                        </ul>
-                    </div>
-                    <div class="city_sort" ref="citySort">
-                        <div v-for="item in cityList " :key="item.letter">
-                            <h2>{{item.letter}}</h2>
-                            <ul>
-                                <li v-for="city in item.list" :key="city.id" @tap="changeCity(city.nm,city.id)">
-                                    {{city.nm}}
-                                </li>
+        <Loading v-if="isLoading"></Loading>
+        <div class="city_body" v-else>
+            <div class="city_list">
+                <div ref="cityList" style="height: 100%">
+                    <div>
+                        <div class="city_hot">
+                            <h2>热门城市</h2>
+                            <ul class="clearfix">
+                                <li v-for="city in hotList " :key="city.id" @tap="changeCity(city.nm,city.id)">{{city.nm}}</li>
                             </ul>
+                        </div>
+                        <div class="city_sort" ref="citySort">
+                            <div v-for="item in cityList " :key="item.letter">
+                                <h2>{{item.letter}}</h2>
+                                <ul>
+                                    <li v-for="city in item.list" :key="city.id" @tap="changeCity(city.nm,city.id)">
+                                        {{city.nm}}
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="city_index">
+                <ul>
+                    <li v-for="(item,index) in cityList" :key="item.letter" @click="toCity(index)">{{item.letter}}</li>
+                </ul>
+            </div>
         </div>
-        <div class="city_index">
-            <ul>
-                <li v-for="(item,index) in cityList" :key="item.letter" @click="toCity(index)">{{item.letter}}</li>
-            </ul>
-        </div>
-    </div>
 </template>
 
 <script>

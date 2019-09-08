@@ -24,7 +24,7 @@
                         <span>{{cinema.distance}}</span>
                     </div>
                     <div class="card">
-                        <div v-for="(value,key) in cinema.tag" v-if="value===1" :class="key|formatClass">
+                        <div v-for="(value,key) in cinema.tag" v-if="value===1" v-bind:class="key|formatClass">
                             {{key|formatCard}}
                         </div>
                     </div>
@@ -48,7 +48,7 @@
             }
         },
         computed: {
-            ...mapState(['city'])
+            ...mapState(['city']),
         },
         methods: {
             async getCinemaList() {
@@ -82,7 +82,7 @@
                 })
                 return value
             },
-            formatClass(key) {
+            formatClass(key){
                 let value = ''
                 const card = [
                     {key: 'allowRefund', value: 'or'},
@@ -98,7 +98,6 @@
                 })
                 return value
             }
-
         },
         activated() {
             const {id} = this.city.cityInfo
@@ -118,6 +117,7 @@
         position: relative;
         display: flex;
         flex-direction: column;
+        margin-top: 50px;
     }
 
     .cinema_menu {

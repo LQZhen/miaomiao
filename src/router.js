@@ -12,9 +12,18 @@ export default new VueRouter({
         {
             path: '/cinema',
             component: () => import('@/pages/cinema'),
-            meta:{
+            meta: {
                 title: '喵喵影院'
             }
+        },
+        {
+            path: '/movie/detail/:id',
+            component: () => import('@/pages/movie/detail'),
+            meta: {
+                title: '电影详情',
+                show: true
+            },
+            props: true
         },
         {
             path: '/movie',
@@ -26,10 +35,11 @@ export default new VueRouter({
                 {
                     path: 'search', component: () => import('@/pages/movie/search'),
                 },
-                {path: 'nowplaying', component: () => import('@/pages/movie/nowPlaying'),
+                {
+                    path: 'nowplaying', component: () => import('@/pages/movie/nowPlaying'),
                 },
-                {path: 'comingsoon', component: () => import('@/pages/movie/comingSoon'),
-
+                {
+                    path: 'comingsoon', component: () => import('@/pages/movie/comingSoon'),
                 },
                 {path: '/movie', redirect: '/movie/nowplaying',}
             ]

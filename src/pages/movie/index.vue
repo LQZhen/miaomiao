@@ -1,25 +1,24 @@
 <template>
     <div class="content">
-        <div class="movie_menu">
-            <router-link class="city_name" tag="div" to="/movie/city">
-                <span>{{city.cityInfo.nm}}</span><i class="iconfont icon-lower-triangle"></i>
-            </router-link>
-            <div class="hot_swtich">
-                <router-link class="hot_item" tag="div" to="/movie/nowplaying">
-                    正在热映
+            <div class="movie_menu">
+                <router-link class="city_name" tag="div" to="/movie/city">
+                    <span>{{city.cityInfo.nm}}</span><i class="iconfont icon-lower-triangle"></i>
                 </router-link>
-                <router-link class="hot_item" tag="div" to="/movie/comingsoon">
-                    即将上映
+                <div class="hot_swtich">
+                    <router-link class="hot_item" tag="div" to="/movie/nowplaying">
+                        正在热映
+                    </router-link>
+                    <router-link class="hot_item" tag="div" to="/movie/comingsoon">
+                        即将上映
+                    </router-link>
+                </div>
+                <router-link class="search_entry" tag="div" to="/movie/search">
+                    <i class="iconfont icon-sousuo"></i>
                 </router-link>
             </div>
-            <router-link class="search_entry" tag="div" to="/movie/search">
-                <i class="iconfont icon-sousuo"></i>
-            </router-link>
-        </div>
-        <keep-alive>
-            <router-view></router-view>
-        </keep-alive>
-
+            <keep-alive>
+                <router-view></router-view>
+            </keep-alive>
     </div>
 </template>
 <script>
@@ -60,12 +59,13 @@
     .content {
         flex: 1;
         overflow: auto;
+        margin-top: 50px;
         margin-bottom: 50px;
         position: relative;
         display: flex;
         flex-direction: column;
 
-        & > .movie_menu {
+      .movie_menu {
             width: 100%;
             height: 45px;
             border-bottom: 1px solid #e6e6e6;

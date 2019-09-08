@@ -18,6 +18,7 @@
     .content {
         flex: 1;
         overflow: auto;
+        margin-top: 50px;
         margin-bottom: 50px;
         position: relative;
         display: flex;

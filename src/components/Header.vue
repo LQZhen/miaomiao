@@ -1,13 +1,12 @@
 <template>
     <div class="header">
         <h1>{{title||'喵喵电影'}}</h1>
+       <i class="icon-right iconfont" v-if="title==='电影详情'" @touchstart="$router.back()"></i>
     </div>
 </template>
 <script>
     export default {
-        props:{
-            title:String,
-        }
+        props:['show','title']
     }
 </script>
 <style lang='less' type='text/less' scoped>
@@ -17,7 +16,10 @@
         color: #fff;
         background: #e54847;
         border-bottom: 1px solid #e54847;
-        position: relative;
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 100;
     }
 
     .header h1 {

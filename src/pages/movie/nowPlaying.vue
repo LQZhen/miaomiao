@@ -3,8 +3,8 @@
         <Loading v-if="isLoading"></Loading>
         <ul v-else>
             <li v-for="movie in movieList" :key="movie.id">
-                <div class="pic_show"><img :src="movie.img|setWH('128.180')"></div>
-                <div class="info_list">
+                <div class="pic_show" @tap="$router.push(`/movie/detail/${movie.id}`)"><img :src="movie.img|setWH('128.180')"></div>
+                <div class="info_list"  @tap="$router.push(`/movie/detail/${movie.id}`)">
                     <h2>{{movie.nm}} <img src="@/assets/maxs.png" alt="" v-if="movie.version"></h2>
                     <p>观众评 <span class="grade">{{movie.sc}}</span></p>
                     <p>主演: {{movie.star}}</p>
