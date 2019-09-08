@@ -41,16 +41,14 @@
                     return
                 }
                 const that = this
-                messageBox({
-                    title: '定位',
+                messageBox({title: '定位',
                     content: nm,
                     cancle: '取消',
                     ok: "切换",
                     handleOk() {
                         that.$store.commit('city/changeCity', {nm, id})
                         window.location.reload()
-                    }
-                })
+                    }})
             }
         }
     }

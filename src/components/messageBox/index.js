@@ -7,8 +7,8 @@ export default function (options) {
          data:{
              title: options.title,
              content: options.content,
-             ok: options.ok,
-             cancle: options. cancle
+             ok: options.ok||'',
+             cancle: options. cancle||''
          },
          methods:{
              handleCancle:function () {

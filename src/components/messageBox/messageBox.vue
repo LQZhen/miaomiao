@@ -3,8 +3,8 @@
         <h2>{{title}}</h2>
         <p>{{content}}</p>
         <div>
-            <div @touchstart="handleCancle">{{ cancle}}</div>
-            <div @touchstart="handleOk">{{ok}}</div>
+            <div @touchstart="handleCancle" v-if="cancle">{{ cancle}}</div>
+            <div @touchstart="handleOk" v-if="ok">{{ok}}</div>
         </div>
     </div>
 </template>

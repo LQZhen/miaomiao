@@ -46,9 +46,33 @@ export default new VueRouter({
         {
             path: '/mine',
             component: () => import('@/pages/mine'),
-            meta: {
-                title: '我的喵喵'
-            }
+            children: [
+                {path: '/mine', redirect: '/mine/center'},
+                {
+                    path: 'login', component: () => import('@/components/Login'),
+                    meta: {
+                        title: '我的喵喵'
+                    },
+                },
+                {
+                    path: 'center', component: () => import('@/pages/mine/center'),
+                    meta: {
+                        title: '我的喵喵'
+                    },
+                },
+                {
+                    path: "register", component: () => import('@/components/Register'),
+                    meta: {
+                        title: '我的喵喵'
+                    },
+                },
+                {
+                    path: 'repassword', component: () => import('@/components/Repassword'),
+                    meta: {
+                        title: '我的喵喵'
+                    },
+                }
+            ]
         }
     ]
 })

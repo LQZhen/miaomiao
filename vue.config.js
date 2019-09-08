@@ -4,6 +4,10 @@ module.exports={
             "/api":{
                 target:'http://39.97.33.178',
                 changeOrigin:true
+            },
+            "/users":{
+                changeOrigin:true,
+                target:"http://localhost:3000"
             }
         }
     }
