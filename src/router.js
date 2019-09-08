@@ -21,7 +21,6 @@ export default new VueRouter({
             component: () => import('@/pages/movie/detail'),
             meta: {
                 title: '电影详情',
-                show: true
             },
             props: true
         },
