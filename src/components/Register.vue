@@ -2,7 +2,7 @@
     <div class="register_body">
         <div class="register_email">
             邮箱：<input v-model="email" class="register_text" type="text">
-            <button @touchstart="handleToVerify">验证码</button>
+            <button @touchstart="handleToVerify" :disabled="flag">{{verifyInfo}}</button>
         </div>
         <div>
             用户名：<input v-model="username" class="register_text" type="text">
@@ -37,11 +37,28 @@
                 username: '',
                 password: '',
                 verify: '',
+                verifyInfo:'发送验证码',
+                flag:false
             }
 
         },
         methods: {
             async handleToVerify() {
+                if(this.flag){
+                    return  true
+                }
+                this.flag=true
+                let time=60
+                this.setIntervalId=setInterval(()=>{
+                    this.verifyInfo=`${time}s`
+                    time--
+                    if(time<=0){
+                        this.verifyInfo='发送验证码'
+                        clearInterval(this.setIntervalId)
+                        this.flag=false
+                    }
+
+                },1000)
                 const {email} = this
                 const response = await this.$axios.get('/users/verify', {
                     params: {email}
@@ -67,7 +84,7 @@
                 const {username, password, email, verify} = this
                 const response = await this.$axios.post('/users/register', {username, password, email, verify})
                 const result = response.data
-                if (result.code === -1) {
+                if (result.code === -1||result.code === -2) {
                     return messageBox({
                         title: '注册信息',
                         content: result.msg,

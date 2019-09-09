@@ -2,7 +2,7 @@
     <div class="password_body">
         <div class="password_email">
             邮箱：<input v-model="email" class="password_text" type="text">
-            <button @touchstart="handleToVerify">发送验证码</button>
+            <button @touchstart="handleToVerify" :disabled="flag">{{verifyInfo}}</button>
         </div>
         <div>
             新密码：<input v-model="password" class="password_text" type="password">
@@ -29,11 +29,28 @@
             return {
                 email: '',
                 password: '',
-                verify: ""
+                verify: "",
+                verifyInfo:'发送验证码',
+                flag:false
             }
         },
         methods: {
             async handleToVerify() {
+                if(this.flag){
+                    return  true
+                }
+                this.flag=true
+                let time=60
+                this.setIntervalId=setInterval(()=>{
+                    this.verifyInfo=`${time}s`
+                    time--
+                    if(time<=0){
+                        this.verifyInfo='发送验证码'
+                        clearInterval(this.setIntervalId)
+                        this.flag=false
+                    }
+
+                },1000)
                 const {email} = this
                 const response = await this.$axios.get('/users/verify', {
                     params: {email}
@@ -68,7 +85,7 @@
                             that.$router.push('/mine/login')
                         }
                     })
-                } else if (result.code === -1) {
+                } else if (result.code === -1||result.code === -2) {
                     messageBox({
                         title: '修改信息',
                         content: result.msg,
